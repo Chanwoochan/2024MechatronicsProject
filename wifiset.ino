@@ -1,3 +1,7 @@
+/***** Wifi 사용 관련 함수들이 정의되어있는 스케치파일. ******/
+/*****     국민대학교 기계공학부 20191089 김찬우.     ******/
+/*****           kcwjoma@kookmin.ac.kr           ******/
+
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include "defpins.h"

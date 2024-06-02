@@ -1,3 +1,7 @@
+/***** MP3 모듈 사용 관련 함수들이 정의되어있는 스케치파일. ******/
+/*****       국민대학교 기계공학부 20191089 김찬우.      ******/
+/*****             kcwjoma@kookmin.ac.kr            ******/
+
 #include <SoftwareSerial.h>
 #include "defpins.h"
 #include "kcwgtj.h"
@@ -24,16 +28,31 @@ void playTrack(int16_t track)                         // 원하는 트랙 재생
 {
   sendPacket(0x03, highByte(track), lowByte(track));
 }
+
+void playfTrack(int8_t folder,int8_t track)
+{
+  sendPacket(0x0F, folder, track);
+}
+
 void sendPacket(byte Commend, byte Par1, byte Par2)   // MP3 모듈에 패킷 전송
 {
+  int16_t a = (Par1 << 8) | Par2;
+  Serial.println(a);
   int16_t checksum = -(Version_Byte + Command_Length + Commend + Acknowledge + Par1 + Par2);
   byte Command_line[10] = { Start_Byte, Version_Byte, Command_Length, Commend, Acknowledge, Par1, Par2, highByte(checksum), lowByte(checksum), End_Byte};
   for (byte k=0; k<10; k++) softSerial.write(Command_line[k]);
 }
 
-void soundplay(int n)                                 // 사운드가 종료될 때 까지 대기하며 사운드 재생. BUSY 핀 사용
+void soundplay(int8_t n)                                 // 사운드가 종료될 때 까지 대기하며 사운드 재생. BUSY 핀 사용
 {
-  playTrack(n);
+  playfTrack(1,n);
   delay(850);
-  while(1) if (digitalRead(25)) break;
+  while(1) if (digitalRead(SPK_STATE_PIN)) break;
+}
+
+void soundplay2(int8_t n)                                 // 사운드가 종료될 때 까지 대기하며 사운드 재생. BUSY 핀 사용
+{
+  playfTrack(2,n);
+  delay(850);
+  while(1) if (digitalRead(SPK_STATE_PIN)) break;
 }
