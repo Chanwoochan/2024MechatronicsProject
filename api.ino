@@ -12,7 +12,7 @@ HTTPClient https;
 HTTPClient https2;
 
 // 국민대의 날씨 정보를 API에서 가져오기.
-const char* url = "https://api.openweathermap.org/data/2.5/weather?lat=37.61137821915271&lon=126.99419953626045&lang=kr&units=metric&appid=d0eb77015eb64bcc1b07c347cc735fad";
+const char* url = "https://api.openweathermap.org/data/2.5/weather?lat=37.61137821915271&lon=126.99419953626045&lang=kr&units=metric&appid=[[API 토큰은 비밀입니다.]]";
 const char* timeUrl = "https://worldtimeapi.org/api/timezone/Asia/Seoul";
 void httpInit() // API 서버에 연결
 {
